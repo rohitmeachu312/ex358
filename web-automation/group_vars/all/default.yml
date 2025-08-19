@@ -1,0 +1,9 @@
+---
+httpd_packages:
+  - httpd
+  - mod_ssl
+nginx_packages:
+  - nginx
+cacert_file: "ca-cert.crt"
+selinux_target: '/srv/www(/.*)?'
+selinux_setype: 'httpd_sys_content_t'

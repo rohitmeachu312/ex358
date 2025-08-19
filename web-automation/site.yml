@@ -1,0 +1,4 @@
+---
+- ansible.builtin.import_playbook: httpd.yml
+- ansible.builtin.import_playbook: nginx.yml
+
