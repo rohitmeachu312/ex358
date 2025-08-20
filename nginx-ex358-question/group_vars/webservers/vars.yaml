@@ -1,0 +1,5 @@
+docroot: /srv/www/html
+indexfile: nginx.html
+servername: 
+ - serverb.lab.example.com
+ - servera.lab.example.com
