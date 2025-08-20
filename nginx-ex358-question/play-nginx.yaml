@@ -1,0 +1,48 @@
+---
+- hosts: 
+    - serverc.lab.example.com
+    - serverd.lab.example.com
+  become: true
+  tasks:
+    - name: install nginx rpm
+      yum:
+        name: nginx
+        state: latest
+
+    - name: Download nginx configuration from template
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/conf.d/webserver.conf
+      loop: "{{ nginx }}"
+
+    - name: create dir
+      file:
+        path: /srv/www/html
+        state: directory
+        mode: 0755
+
+    - name: setup document root
+      template:      
+        src: index.html.j2
+        dest: /srv/www/html/nginx.html
+      loop: "{{ nginx }}"
+
+    - name: set filr context
+      command: semanage fcontext -a -t httpd_config_t '/srv(/.*)?'
+
+    - name: restorecon
+      command: restorecon -vRF /srv/www/html/
+
+    - name: setup firewall
+      firewalld:
+        service: http
+        permanent: yes
+        state: enabled
+        immediate: yes
+
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes 
+
