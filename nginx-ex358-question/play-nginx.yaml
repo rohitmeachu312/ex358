@@ -11,7 +11,7 @@
 
     - name: Download nginx configuration from template
       template:
-        src: nginx.conf.j2
+        src: indexes/nginx/nginx.conf.j2
         dest: /etc/nginx/conf.d/webserver.conf
       loop: "{{ nginx }}"
 
@@ -23,7 +23,7 @@
 
     - name: setup document root
       template:      
-        src: index.html.j2
+        src: indexes/html/vhost/index.html.j2
         dest: /srv/www/html/nginx.html
       loop: "{{ nginx }}"
 
