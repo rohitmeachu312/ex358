@@ -3,9 +3,10 @@ server {
     server_name {{ item }};
 
     root /srv/www/html;
-    index nginx.html;
+    index index.html;
 
     location / {
         try_files $uri $uri/ =404;
     }
+
 }
